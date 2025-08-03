@@ -26,19 +26,16 @@ elastic_product_search = {
     },
 }
 
-# Configure the client and tools
 client = genai.Client(api_key=os.getenv("GENAI_API_KEY"))
 tools  = types.Tool(function_declarations=[elastic_product_search])
 config = types.GenerateContentConfig(tools=[tools])
 
-# Send request with function declarations
 response = client.models.generate_content(
     model="gemini-2.5-flash",
     contents="6 tem dipilona ? ",
     config=config,
 )
 
-# Check for a function call
 if response.function_calls:
 
     function_call_name = response.function_calls[0].name
